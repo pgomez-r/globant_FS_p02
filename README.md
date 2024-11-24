@@ -1,4 +1,4 @@
-# GLOBANTx42 FullStack - Project 00 - TripRecommendator
+# GLOBANTx42 FullStack - Project 02 - TripRecommendator
 Proyecto 02 de la piscina Full Stack Globant x 42
 
 ## Under construction...

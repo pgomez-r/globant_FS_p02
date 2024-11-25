@@ -2,15 +2,19 @@ CONTAINER_NAME=app_gallery
 PORT=5500
 
 # Full build and run
-all: build run
+all: build dev
 
 # Build the Docker container
 build:
 	docker build --no-cache --progress=plain -t ${CONTAINER_NAME} .
 
-# Run the Docker container
+# Run the Docker container on develop service
+dev:
+	docker-compose up dev -d --no-build
+
+# Run the Docker container on web service (deploy the  website on localhost)
 run:
-	docker-compose up -d
+	docker-compose up web -d --no-build
 
 # Get into Docker container terminal
 shell:
@@ -31,4 +35,4 @@ fclean:
 	docker image prune -f
 	docker volume prune -f
 
-.PHONY: all build run shell stop clean fclean
+.PHONY: all build run dev shell stop clean fclean

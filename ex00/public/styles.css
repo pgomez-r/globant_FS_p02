@@ -123,12 +123,21 @@ header #search-form button:hover {
 	background-color: #636363;
 }
 
+#top-block{
+
+}
+
 #restaurants,
-#accommodations,
-#ai-text,
-#map {
+#accommodations {
 	padding: 2rem;
 	flex: 1;
+}
+
+#bottom-block{
+	display: flex;
+	flex-direction: row;
+	margin: 1rem;
+	padding: 1rem;
 }
 
 #ai-text {
@@ -136,8 +145,22 @@ header #search-form button:hover {
 	background-color: #f0f0f0;
 	border: 1px solid #ddd;
 	border-radius: 0.25rem;
-	margin-top: 1rem;
-	min-height: 100px; /* Ensure the div is visible even if empty */
+	max-height: 200px;
+	overflow-y: auto;
+	word-wrap: break-word;
+	margin: 1rem;
+}
+
+#map {
+	padding: 1rem;
+	background-color: #f0f0f0;
+	border: 1px solid #ddd;
+	border-radius: 0.25rem;
+	max-height: 200px;
+	overflow-y: auto;
+	word-wrap: break-word;
+	height: 200px;
+	margin: 1rem;
 }
 
 footer {

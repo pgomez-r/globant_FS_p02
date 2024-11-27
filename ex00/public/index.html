@@ -30,16 +30,24 @@
 	</header>
 
 	<div id="top-block">
-		<div id="restaurants"></div>
-		<div id="accommodations"></div>
+		<div class="result-card" id="restaurants"></div>
+		<div class="result-card" id="accommodations"></div>
 	</div>
 	<div id="bottom-block">
-		<div id="map"></div>
+		<div id="map">
+			<iframe
+				frameborder="0"
+				style="border:0"
+				src="" allowfullscreen>
+			</iframe>
+		</div>
 		<div id="ai-text"></div>
 	</div>
 	
 	<footer>© 2024 42Málaga TripRecommendator by pgomez-r. All rights reserved.</footer>
-
+	<script async
+    	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC92vMGMqQMVtmyXkNFtdEFpBQ__IrZL_E&loading=async&libraries=places&callback=initMap">
+	</script>
 	<script type="module" src="build/main.js"></script>
 </body>
 </html>

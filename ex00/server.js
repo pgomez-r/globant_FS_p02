@@ -1,6 +1,7 @@
 import express from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import fs from 'fs';
 
 const app = express();
 const PORT = process.env.PORT || 5500;
@@ -18,9 +19,24 @@ app.use('/build', express.static(path.join(__dirname, 'build')));
 // Serve static files from the /node_modules directory
 app.use('/node_modules', express.static(path.join(__dirname, 'node_modules')));
 
-// Serve the worldcities.csv file from the root directory
-app.get('/worldcities.csv', (req, res) => {
-	res.sendFile(path.join(__dirname, 'worldcities.csv'));
+// Read and parse the CSV file
+let cityData = [];
+fs.readFile(path.join(__dirname, 'worldcities.csv'), 'utf8', (err, data) => {
+	if (err) {
+		console.error('Error reading CSV file:', err);
+		return;
+	}
+	const rows = data.split('\n');
+	cityData = rows.map(row => {
+		const [name, , latitude, longitude, country] = row.split(',').map(value => value.replace(/"/g, '').trim());
+		return { name, latitude, longitude, country };
+	});
+	console.log('CSV data loaded:', cityData.length, 'records');
+});
+
+// Serve the parsed CSV data
+app.get('/citydata', (req, res) => {
+	res.json(cityData);
 });
 
 // Serve index.html for the root route

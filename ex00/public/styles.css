@@ -123,8 +123,36 @@ header #search-form button:hover {
 	background-color: #636363;
 }
 
-#top-block{
+.results-container {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-around;
+	margin: 20px 0;
+}
 
+.result-card {
+	background-color: #f8f8f8;
+	border: 1px solid #ddd;
+	border-radius: 8px;
+	padding: 16px;
+	margin: 10px;
+	width: 200px;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.result-card h3 {
+	margin-top: 0;
+}
+
+.result-card p {
+	margin: 8px 0;
+}
+
+#top-block{
+	display: flex;
+	flex-direction: column;
+	margin: 1rem;
+	padding: 1rem;
 }
 
 #restaurants,
@@ -154,12 +182,7 @@ header #search-form button:hover {
 #map {
 	padding: 1rem;
 	background-color: #f0f0f0;
-	border: 1px solid #ddd;
-	border-radius: 0.25rem;
 	max-height: 200px;
-	overflow-y: auto;
-	word-wrap: break-word;
-	height: 200px;
 	margin: 1rem;
 }
 

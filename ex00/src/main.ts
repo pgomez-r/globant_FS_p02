@@ -1,4 +1,6 @@
 
+import * as dotenv from 'dotenv';
+
 //Define APIs results interfaces with fields needed so TS won't complain
 interface	ApiResponse {
 	candidates: { content: { parts: { text: string }[]}}[];
@@ -19,6 +21,8 @@ interface	PlaceResult
 	rating: number;
 }
 
+dotenv.config();
+
 //Web usable elements stored in variables
 const	searchForm = document.getElementById('search-form') as HTMLFormElement;
 const	searchText = document.getElementById('search-box') as HTMLInputElement;
@@ -29,9 +33,9 @@ const	restaurantsDiv = document.getElementById('restaurants');
 const	accommodationsDiv = document.getElementById('accommodations');
 
 //APIs Credentials - Need to mock to be parsed from .json or .env ALSO IN INDEX.HTML!!
-const	apiKey: string = "AIzaSyAJpVjJ8zJAWyMwYttVoBaK54jlCrPIaNE";
+const	apiKey: string = process.env.GEMINI_API_KEY || '';
+const	mapKey:	string = process.env.MAPS_API_KEY || '';
 const	apiEndPoint: string = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
-const	mapKey:	string = "AIzaSyC92vMGMqQMVtmyXkNFtdEFpBQ__IrZL_E"
 
 document.addEventListener('DOMContentLoaded', () => {
 	
@@ -110,7 +114,7 @@ async function searchBar()
 				if (cityResult)
 				{
 					showMap(cityResult.latitude, cityResult.longitude, cityResult.name);
-					await displayGooglePlaces(cityResult.latitude, cityResult.longitude);
+					await displayGooglePlaces(cityResult.name);
 				}
 			}
 		}
@@ -151,38 +155,154 @@ async function	checkQuery(query: string): Promise<CityData | null>
 	return (null);
 }
 
-async function displayGooglePlaces(latitude: string, longitude: string)
+async function displayGooglePlaces(cityName: string)
 {
-	const	restaurants = await fetchGooglePlaces(latitude, longitude, 'restaurant');
-	const	accommodations = await fetchGooglePlaces(latitude, longitude, 'lodging');
-  
+	const	places = await fetchGooglePlaces(cityName);
 	if (restaurantsDiv)
 	{
 		restaurantsDiv.innerHTML = '';
-		restaurants.forEach(place => {
+		places.restaurants.forEach(place => {
 			const card = createCard(place);
 			restaurantsDiv.appendChild(card);
 		});
 	}
 	if (accommodationsDiv) {
 		accommodationsDiv.innerHTML = '';
-		accommodations.forEach(place => {
+		places.accommodations.forEach(place => {
 			const card = createCard(place);
 			accommodationsDiv.appendChild(card);
 	  });
 	}
   }
 
-async function fetchGooglePlaces(latitude: string, longitude: string, type: string): Promise<PlaceResult[]>
-{
-	const	response = await fetch(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude},${longitude}&radius=1500&type=${type}&key=${mapKey}`);
-	const	data = await response.json();
-	return data.results.slice(0, 4).map((place: any) => ({
-		name: place.name,
-		address: place.vicinity,
-		rating: place.rating
+// async function fetchGooglePlaces(query: string): Promise<{ restaurants: PlaceResult[], accommodations: PlaceResult[] }>
+// {
+// 	const response = await fetch('https://places.googleapis.com/v1/places:searchText', {
+// 		method: 'POST',
+// 		headers: {
+// 		'Content-Type': 'application/json',
+// 		'X-Goog-Api-Key': mapKey,
+// 		'X-Goog-FieldMask': 'places.displayName,places.formattedAddress,places.priceLevel'
+// 		},
+// 		body: JSON.stringify({
+// 		textQuery: `restaurants in ${query}`
+// 		})
+// 	});
+// 	const data = await response.json();
+// 	const restaurants = data.places.slice(0, 4).map((place: any) => ({
+// 		displayName: place.displayName,
+// 		formattedAddress: place.formattedAddress,
+// 		priceLevel: place.priceLevel
+// 	}));
+
+// 	const response2 = await fetch('https://places.googleapis.com/v1/places:searchText', {
+// 		method: 'POST',
+// 		headers: {
+// 		'Content-Type': 'application/json',
+// 		'X-Goog-Api-Key': mapKey,
+// 		'X-Goog-FieldMask': 'places.displayName,places.formattedAddress,places.priceLevel'
+// 		},
+// 		body: JSON.stringify({
+// 		textQuery: `accommodations in ${query}`
+// 		})
+// 	});
+// 	const data2 = await response2.json();
+// 	const accommodations = data2.places.slice(0, 4).map((place: any) => ({
+// 		displayName: place.displayName,
+// 		formattedAddress: place.formattedAddress,
+// 		priceLevel: place.priceLevel
+// 	}));
+
+// 	return { restaurants, accommodations };
+// }
+
+async function fetchGooglePlaces(query: string): Promise<{ restaurants: PlaceResult[], accommodations: PlaceResult[] }> {
+	// Log the request details
+	console.log('Requesting restaurants with query:', query);
+	console.log('Request URL:', 'https://places.googleapis.com/v1/places:searchText');
+	console.log('Request Method:', 'POST');
+	console.log('Request Headers:', {
+	  'Content-Type': 'application/json',
+	  'X-Goog-Api-Key': mapKey,
+	  'X-Goog-FieldMask': 'places.displayName,places.formattedAddress,places.priceLevel'
+	});
+	console.log('Request Body:', JSON.stringify({
+	  textQuery: `restaurants in ${query}`
 	}));
-}
+  
+	const response = await fetch('https://places.googleapis.com/v1/places:searchText', {
+	  method: 'POST',
+	  headers: {
+		'Content-Type': 'application/json',
+		'X-Goog-Api-Key': mapKey,
+		'X-Goog-FieldMask': 'places.displayName,places.formattedAddress,places.priceLevel'
+	  },
+	  body: JSON.stringify({
+		textQuery: `restaurants in ${query}`
+	  })
+	});
+  
+	// Log the response details
+	console.log('Response Status:', response.status);
+	console.log('Response Status Text:', response.statusText);
+	const data = await response.json();
+	console.log('Response Body:', data);
+  
+	if (!response.ok) {
+	  console.error("Error fetching restaurants:", response.statusText);
+	  return { restaurants: [], accommodations: [] };
+	}
+  
+	const restaurants = data.places ? data.places.slice(0, 4).map((place: any) => ({
+	  displayName: place.displayName,
+	  formattedAddress: place.formattedAddress,
+	  priceLevel: place.priceLevel
+	})) : [];
+  
+	// Log the request details for accommodations
+	console.log('Requesting accommodations with query:', query);
+	console.log('Request URL:', 'https://places.googleapis.com/v1/places:searchText');
+	console.log('Request Method:', 'POST');
+	console.log('Request Headers:', {
+	  'Content-Type': 'application/json',
+	  'X-Goog-Api-Key': mapKey,
+	  'X-Goog-FieldMask': 'places.displayName,places.formattedAddress,places.priceLevel'
+	});
+	console.log('Request Body:', JSON.stringify({
+	  textQuery: `accommodations in ${query}`
+	}));
+  
+	const response2 = await fetch('https://places.googleapis.com/v1/places:searchText', {
+	  method: 'POST',
+	  headers: {
+		'Content-Type': 'application/json',
+		'X-Goog-Api-Key': mapKey,
+		'X-Goog-FieldMask': 'places.displayName,places.formattedAddress,places.priceLevel'
+	  },
+	  body: JSON.stringify({
+		textQuery: `accommodations in ${query}`
+	  })
+	});
+  
+	// Log the response details for accommodations
+	console.log('Response Status:', response2.status);
+	console.log('Response Status Text:', response2.statusText);
+	const data2 = await response2.json();
+	console.log('Response Body:', data2);
+  
+	if (!response2.ok) {
+	  console.error("Error fetching accommodations:", response2.statusText);
+	  return { restaurants, accommodations: [] };
+	}
+  
+	const accommodations = data2.places ? data2.places.slice(0, 4).map((place: any) => ({
+	  displayName: place.displayName,
+	  formattedAddress: place.formattedAddress,
+	  priceLevel: place.priceLevel
+	})) : [];
+  
+	return { restaurants, accommodations };
+  }
 
 function createCard(place: PlaceResult): HTMLElement
 {

@@ -2,6 +2,9 @@ import express from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import fs from 'fs';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 5500;
@@ -17,7 +20,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.get('/env', (req, res) => {
 	res.json({
 		GEMINI_API_KEY: process.env.GEMINI_API_KEY,
-		GOOGLE_MAPS_API_KEY: process.env.MAPS_API_KEY,
+		MAPS_API_KEY: process.env.MAPS_API_KEY,
 	});
 });
 

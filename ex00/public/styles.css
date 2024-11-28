@@ -140,6 +140,10 @@ header #search-form button:hover {
 	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+.result-card img {
+	
+	max-width: 100px;
+}
 .result-card h3 {
 	margin-top: 0;
 }

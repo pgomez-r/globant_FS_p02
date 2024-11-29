@@ -1,15 +1,5 @@
 /// <reference types="@types/google.maps" />
 
-// interface	Place
-// {
-// 	displayName: string;
-// 	formattedAddress: string;
-// 	rating?: number;
-// 	priceLevel?: number;
-// 	photos: google.maps.places.PlacePhoto[];
-// 	googleMapsURI?: string;
-// }
-
 fetch('/env')
 	.then(response => response.json())
 	.then(env => {
@@ -62,28 +52,6 @@ async function displayGooglePlaces(cityName: string, latStr: string, lngStr: str
 	}
 }
 
-// async function findPlaces(query: string, type: string, lat: number, lng: number): Promise<any[]>
-// {
-// 	const { Place } = await google.maps.importLibrary("places") as google.maps.PlacesLibrary;
-// 	const request = {
-// 		textQuery: `${type} in ${query}`,
-// 		fields: ['displayName', 'location', 'businessStatus'],
-// 		includedType: type,
-// 		locationBias: { lat, lng },
-// 		isOpenNow: true,
-// 		language: 'en-US',
-// 		maxResultCount: 8,
-// 		minRating: 3.2,
-// 		region: 'us',
-// 		useStrictTypeFiltering: false,
-// 	};
-
-// 	const { places } = await Place.searchByText(request);
-// 	return (places);
-// }
-
-// "id" - "adrFormatAddress" - "googleMapsURI" - "location" - "priceLevel" - "rating" - 
-
 async function	findPlaces(query: string, type: string, lat: number, lng: number): Promise<any[]> {
 	const { Place } = await google.maps.importLibrary("places") as google.maps.PlacesLibrary;
 	const request = {
@@ -91,7 +59,7 @@ async function	findPlaces(query: string, type: string, lat: number, lng: number)
 		fields: ['*'],
 		locationBias: { lat, lng },
 		language: 'en-US',
-		maxResultCount: 1,
+		maxResultCount: 5,
 		minRating: 3.5,
 		region: 'us',
 	};

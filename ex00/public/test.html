@@ -18,18 +18,20 @@
 				</button>
 				<img src="42_Logo.png" id="logo">
 			</div>
+			<h2>42 Málaga TripRecommendator</h2>
 			<button id="login-button">Sign in</button>
 		</div>
-		<div id="search-main">
-			<h2>42 Málaga TripRecommendator</h2>
-			<form action="" id="search-form">
-				<input type="text" id="search-box" placeholder="Enter a city name">
-				<button>Ask</button>
-			</form>
-		</div>
 	</header>
-
+	
+	<div class="search-main">
+		<form action="" id="search-form">
+			<input type="text" id="search-box" placeholder="Enter a city name">
+			<button>Ask</button>
+		</form>
+	</div>
+	
 	<div id="top-block">
+		<h2 class="result-header">Where to eat in </h2>
 		<div class="result-card" id="restaurants">
 			<div class="card">
 				<a href="https://maps.google.com/?cid=12719680072127598846&amp;hl=en-US&amp;gl=us&amp;source=apiv3" target="_blank"></a>
@@ -72,6 +74,7 @@
 				<p>Price Level: MODERATE</p>
 			</div>
 		</div>
+		<h2 class="result-header">Where to stay in </h2>
 		<div class="result-card" id="accommodations">
 			<div class="card">
 				<a href="https://maps.google.com/?cid=18104463315726371584&amp;hl=en-US&amp;gl=us&amp;source=apiv3" target="_blank"></a>
@@ -115,15 +118,15 @@
 			</div>
 		</div>
 	</div>
+	<div class="trip-reccommendation">
+		<h2 class="result-header">Your trip reccommendation</h2>
+	</div>
 	<div id="bottom-block">
-		<div id="map">
-			<iframe
-				frameborder="0"
-				style="border:0"
-				src="" allowfullscreen>
+		<div class="map">
+			<iframe class="responsive-iframe" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/search?key=AIzaSyC92vMGMqQMVtmyXkNFtdEFpBQ__IrZL_E&amp;q=acommodations+in+Málaga&amp;center=36.7194,-4.4200&amp;zoom=14" allowfullscreen="">
 			</iframe>
 		</div>
-		<div id="ai-text"></div>
+		<div id="ai-text">Input for search is not a city or could not be found.</div>
 	</div>
 	
 	<footer>© 2024 42Málaga TripRecommendator by pgomez-r. All rights reserved.</footer>

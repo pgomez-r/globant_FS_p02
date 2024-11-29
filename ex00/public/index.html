@@ -18,27 +18,30 @@
 				</button>
 				<img src="42_Logo.png" id="logo">
 			</div>
+			<h2>TripRecommendator</h2>
 			<button id="login-button">Sign in</button>
-		</div>
-		<div id="search-main">
-			<h2>42 Málaga TripRecommendator</h2>
-			<form action="" id="search-form">
-				<input type="text" id="search-box" placeholder="Enter a city name">
-				<button>Ask</button>
-			</form>
 		</div>
 	</header>
 
+	<div class="search-main">
+		<form action="" id="search-form">
+			<input type="text" id="search-box" placeholder="Enter a city name">
+			<button>Ask</button>
+		</form>
+	</div>
+	
 	<div id="top-block">
+		<h2 class="result-header" id="food"></h2>
 		<div class="result-card" id="restaurants"></div>
+		<h2 class="result-header" id="lodge"></h2>
 		<div class="result-card" id="accommodations"></div>
 	</div>
+	<div class="trip-reccommendation">
+		<h2 class="result-header">Your trip reccommendation</h2>
+	</div>
 	<div id="bottom-block">
-		<div id="map">
-			<iframe
-				frameborder="0"
-				style="border:0"
-				src="" allowfullscreen>
+		<div class="map">
+			<iframe class="responsive-iframe" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/search?key=AIzaSyC92vMGMqQMVtmyXkNFtdEFpBQ__IrZL_E&amp;q=acommodations+in+Málaga&amp;center=36.7194,-4.4200&amp;zoom=14" allowfullscreen="">
 			</iframe>
 		</div>
 		<div id="ai-text"></div>

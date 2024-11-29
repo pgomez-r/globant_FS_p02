@@ -7,6 +7,7 @@
 
 html, body {
 	height: 100%;
+	width: 100%;
 }
 
 body {
@@ -19,18 +20,21 @@ body {
 header {
 	display: flex;
 	flex-direction: column;
-	align-items: center;
 	padding: 1rem 2rem;
 	background-color: #f8f8f8;
 	border-bottom: 1px solid #ddd;
+	width: 100%;
 }
 
 header #head-bar {
-	width: 100%;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	margin: 0.5rem 0;
+	margin: 0.25rem 0;
+	width: 100%;
+	margin: 0 auto;
+	box-sizing: border-box;
+	max-width: 1200px;
 }
 
 header #nav-menu {
@@ -66,7 +70,7 @@ header #nav-menu img#logo {
 
 header #login-button {
 	padding: 0.75rem;
-	font-size: 1rem;
+	font-size: 2.5vw;
 	border: 1px solid #ddd;;
 	border-radius: 0.25rem;
 	background-color: #363636;
@@ -78,39 +82,47 @@ header #login-button:hover {
 	background-color: #636363;
 }
 
-header #search-main {
-	position: sticky;
-	top: 0;
-	background-color: #f8f8f8;
-	padding: 1rem 0;
-	text-align: center;
-	width: 100%;
-	z-index: 1000;
-}
-
-header h2 {
-	font-size: 2rem;
+#head-bar h2 {
+	font-size: 4vw;
 	margin-bottom: 1rem;
+	flex: 1;
+	text-align: center;
+	max-width: 100%; /* Ensure it doesn't exceed the container width */
+    white-space: nowrap; /* Prevent text from wrapping */
+    overflow: hidden; /* Hide overflow text */
+    text-overflow: ellipsis; 
 }
 
-header #search-form {
+.search-main{
+	padding: 0.5rem 0;
+	margin: 0.5rem;
+	z-index: 1000;
 	display: flex;
 	justify-content: center;
 	width: 100%;
+	position: sticky;
+	top: 0;
 }
 
-header #search-form input[type="text"] {
+.search-main #search-form{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 75%;
+}
+
+.search-main #search-form input[type="text"] {
 	padding: 1rem;
-	font-size: 1rem;
+	font-size: 3vw;
 	border: 1px solid #ddd;
 	border-radius: 0.25rem 0 0 0.25rem;
 	outline: none;
 	width: 70%;
 }
 
-header #search-form button {
+.search-main #search-form button {
 	padding: 1rem;
-	font-size: 1rem;
+	font-size: 3vw;
 	border: 1px solid #ddd;
 	border-left: none;
 	border-radius: 0 0.25rem 0.25rem 0;
@@ -119,7 +131,7 @@ header #search-form button {
 	cursor: pointer;
 }
 
-header #search-form button:hover {
+.search-main #search-form button:hover {
 	background-color: #636363;
 }
 
@@ -130,57 +142,122 @@ header #search-form button:hover {
 	white-space: nowrap;
 }
 
+/*Scroll bar styles, by Copilot, to be honest*/
+.result-card::-webkit-scrollbar {
+	height: 12px; /* Height of the horizontal scrollbar */
+}
+
+.result-card::-webkit-scrollbar-track {
+	background: #f0f0f0; /* Background of the scrollbar track */
+	border-radius: 10px;
+}
+
+.result-card::-webkit-scrollbar-thumb {
+	background: #636363; /* Color of the scrollbar thumb */
+	border-radius: 10px;
+}
+
+.result-card::-webkit-scrollbar-thumb:hover {
+	background: #363636; /* Color of the scrollbar thumb on hover */
+}
+
 .card {
-	background-color:beige;
-	border:1px, solid, #636363;
-	border-radius: 5px;
+	background-color: #f0f0f0;
+	border-radius: 15px;
 	padding: 1rem;
 	margin: 1rem;
-	width: 25vw;
+	flex: 0 0 calc(33.33% - 2rem);
 	height: auto;
+	overflow: hidden;
+	max-width: 25%;
+	aspect-ratio: 1 / 1;
 }
 
 .card img {
-	max-width: 100px;
+	display: block;
+	margin: 0 auto;
+	width: 100%;
+	height: 60%;
+	aspect-ratio: 1 / 1;
+	object-fit: cover;
+	border-radius: 15px;
 }
 .card h3 {
-	margin-top: 0;
+	margin: 0.3rem;
+	text-align: center;
+	font-size: 3vw;
 }
 
-.ard p {
-	margin: 8px 0;
+.card p {
+	width: 90%;
+	margin: 0.3rem;
+	font-style: italic;
+	white-space: normal;
+	text-align: center;
+	font-size: 2vw;
+}
+
+.result-header{
+	display: flex;
+	flex-direction: column;
+	margin: 0.25%;
+	font-size: 4vw;
+}
+
+.trip-reccommendation{
+	margin-top: 0.25rem;
+	margin-bottom: 0.25rem;
+	margin-left: 1rem;
+	padding: 0.25rem;
+	font-size: 4vw;
 }
 
 #top-block{
 	display: flex;
 	flex-direction: column;
-	margin: 1rem;
-	padding: 1rem;
+	margin: 0.5rem;
+	padding: 0.5rem;
 }
 
 #bottom-block{
 	display: flex;
-	flex-direction: row;
-	margin: 1rem;
+	flex-direction: column;
+	margin: 0.5rem;
 	padding: 1rem;
 }
 
 #ai-text {
 	padding: 1rem;
 	background-color: #f0f0f0;
-	border: 1px solid #ddd;
-	border-radius: 0.25rem;
-	max-height: 200px;
+	box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+	border-radius: 0.75rem;
+	max-height: 600px;
 	overflow-y: auto;
 	word-wrap: break-word;
-	margin: 1rem;
+	margin: 0.25rem;
+	width: 100%;
+	height: auto;
 }
 
-#map {
-	padding: 1rem;
-	background-color: #f0f0f0;
-	max-height: 200px;
-	margin: 1rem;
+.map {
+	width: 100%;
+	height: auto;
+	aspect-ratio: 1/1;
+	border-radius: 0.75rem;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	margin: 0.25rem;
+	overflow: hidden;
+	position: relative;
+	max-height: 600px;
+}
+
+.responsive-iframe {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	border: 0;
 }
 
 footer {
@@ -194,42 +271,52 @@ footer {
 	margin-top: auto;
 }
 
-/* Responsive Design */
-@media (min-width: 768px)
-{
-	header {
-		flex-direction: column;
-	}
-
-	header #head-bar {
+/* Responsive Design - get changed if the screen is bigger*/
+@media (min-width: 768px) {
+	#bottom-block {
 		flex-direction: row;
-		justify-content: space-between;
-	}
-
-	header #nav-menu,
-	header #logo,
-	header #login-button {
-		width: auto;
-		margin: 0;
-	}
-
-	header #nav-menu {
-		text-align: left;
 	}
 
 	header #login-button {
-		text-align: right;
+		font-size: 1rem;
 	}
 
-	header h1 {
-		font-size: 2.5rem;
+	#head-bar h2 {
+		font-size: 2rem;
 	}
 
-	header #search-form {
-		width: auto;
+	.search-main #search-form input[type="text"] {
+		font-size: 1rem;
 	}
 
-	header #search-form input[type="text"] {
-		width: auto;
+	.search-main #search-form button {
+		font-size: 1rem;
+	}
+
+	.card h3 {
+		font-size: 1.5rem;
+	}
+	.card p {
+		font-size: 1rem;
+	}
+
+	.result-header{
+		font-size: 1.5rem;
+	}
+
+	.trip-reccommendation{
+		font-size: 2rem;
+	}
+
+	.map {
+		width: 50%;
+		margin-right: 2rem;
+	}
+
+	#ai-text {
+		width: 50%;
+	}
+	#nav-menu {
+		display: none;
 	}
 }

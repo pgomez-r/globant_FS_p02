@@ -30,7 +30,13 @@ async function displayGooglePlaces(cityName: string, latStr: string, lngStr: str
 
 		const	restaurantsDiv = document.getElementById('restaurants');
 		const	accommodationsDiv = document.getElementById('accommodations');
+		const	restaurantsHead = document.getElementById('food');
+		const	accommodationsHead = document.getElementById('lodge');
 
+		if (restaurantsHead)
+			restaurantsHead.innerText = `Where to eat in ${cityName}`;
+		if (accommodationsHead)
+			accommodationsHead.innerText = `Where to stay in ${cityName}`;
 		if (restaurantsDiv) {
 			restaurantsDiv.innerHTML = '';
 			restaurants.forEach((place: any) => {

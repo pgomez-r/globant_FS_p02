@@ -42,6 +42,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 		mapKey = env.MAPS_API_KEY;
 		apiEndPoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
 		showMap("36.699109", "-4.438972", "Málaga");
+		// searchText.value = "Málaga";
+		// await	searchBar();
 	}
 	catch (error){
 		console.error('Error fetching environment variables:', error);

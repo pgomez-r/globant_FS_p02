@@ -58,6 +58,7 @@ async function displayGooglePlaces(cityName: string, latStr: string, lngStr: str
 	}
 }
 
+//TODO: Need to optimise fields [] requested to reduce api comsumption
 async function	findPlaces(query: string, type: string, lat: number, lng: number): Promise<any[]> {
 	const { Place } = await google.maps.importLibrary("places") as google.maps.PlacesLibrary;
 	const request = {
@@ -69,14 +70,9 @@ async function	findPlaces(query: string, type: string, lat: number, lng: number)
 		minRating: 3.5,
 		region: 'us',
 	};
-	console.log('Request parameters:', request);
-
 	//@ts-ignore
 	const { places } = await Place.searchByText(request);
-
-	console.log('Places found:', places);
-
-	return places;
+	return (places);
 }
 
 function	createCard(place: google.maps.places.Place): HTMLElement
@@ -95,7 +91,6 @@ function	createCard(place: google.maps.places.Place): HTMLElement
 		img.alt = place.displayName || 'None display name';
 		link.appendChild(img);
 		card.appendChild(link);
-		card.appendChild(img);
 	}
 
 	const	name = document.createElement('h3');

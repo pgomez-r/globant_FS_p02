@@ -1,8 +1,8 @@
-CONTAINER_NAME=app_gallery
+CONTAINER_NAME=trip_recommendator
 PORT=5500
 
 # Full build and run
-all: build dev
+all: build run
 
 # Build the Docker container
 build:
@@ -10,11 +10,11 @@ build:
 
 # Run the Docker container on develop service
 dev:
-	docker-compose up dev -d --no-build
+	CONTAINER_NAME=${CONTAINER_NAME} docker-compose up dev -d --no-build
 
 # Run the Docker container on web service (deploy the  website on localhost)
 run:
-	docker-compose up web -d --no-build
+	CONTAINER_NAME=${CONTAINER_NAME} docker-compose up web -d --no-build
 
 # Get into Docker container terminal
 shell:

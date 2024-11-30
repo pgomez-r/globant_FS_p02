@@ -22,11 +22,11 @@ interface	PlaceResult
 //Web usable elements stored in variables
 const	searchForm = document.getElementById('search-form') as HTMLFormElement;
 const	searchText = document.getElementById('search-box') as HTMLInputElement;
-//const	loginButton = document.getElementById('login-button') as HTMLElement;
-const	mapView = document.getElementById('map');
+const	mapView = document.getElementsByClassName('map');
+const	mapFrame = document.getElementById('responsive-iframe') as HTMLIFrameElement;
 const	textArea = document.getElementById('ai-text');
-// const	restaurantsDiv = document.getElementById('restaurants');
-// const	accommodationsDiv = document.getElementById('accommodations');
+const	bottomBlock = document.getElementById('bottom-block');
+const	tripHeader = document.getElementById('trip-reccommendation');
 
 //APIs Credentials - Need to mock to be parsed from .json or .env ALSO IN INDEX.HTML!!
 let		apiKey: string = '';
@@ -41,11 +41,17 @@ document.addEventListener('DOMContentLoaded', async () => {
 		apiKey = env.GEMINI_API_KEY;
 		mapKey = env.MAPS_API_KEY;
 		apiEndPoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
-		showMap("36.699109", "-4.438972", "Málaga");
-		// searchText.value = "Málaga";
-		// await	searchBar();
+		if (!sessionStorage.getItem('logged'))
+		{
+			showMap("36.699109", "-4.438972", "Málaga");
+			sessionStorage.setItem('logged', 'true');
+			searchText.value = "Málaga";
+			await	searchBar();
+			searchText.value = "";
+		}
 	}
 	catch (error){
+		alert('Error fetching environment variables, check console log');
 		console.error('Error fetching environment variables:', error);
 	}
 })
@@ -54,25 +60,22 @@ if (searchForm) {
 	searchForm.addEventListener('submit', async (event) => {
 		event.preventDefault();
 		await searchBar();
+		searchText.value = "";
 	});
 }
 
 function showMap(latitude: string, longitude: string, placeName: string | null)
 {
-	const mapIframe = mapView?.querySelector('iframe');
-	if (mapIframe)
-	{	
-		if (placeName === null)
+	if (mapFrame)
+	{
+		if (bottomBlock && tripHeader)
 		{
-			const mapUrl = `https://www.google.com/maps/embed/v1/view?key=${mapKey}&center=${latitude},${longitude}&zoom=14`;
-			mapIframe.src = mapUrl;
+			bottomBlock.style.display = "flex";
+			tripHeader.style.display = "flex";
 		}
-		else
-		{
-			let	search: string = "acommodations+in+" + placeName;
-			const mapUrl = `https://www.google.com/maps/embed/v1/search?key=${mapKey}&q=${search}&center=${latitude},${longitude}&zoom=14`;
-			mapIframe.src = mapUrl;
-		}
+		let	search: string = "acommodations+in+" + placeName;
+		const mapUrl = `https://www.google.com/maps/embed/v1/search?key=${mapKey}&q=${search}&center=${latitude},${longitude}&zoom=14`;
+		mapFrame.src = mapUrl;
 	}
 }
 
@@ -82,17 +85,14 @@ async function searchBar()
 	{
 		let 	query: string = searchText.value;
 		const	cityResult: CityData | null = await checkQuery(query)
-		console.log("cityResult from checkQuery", cityResult);
 		if (!cityResult && textArea)
 		{
 			textArea.innerText = 'Input for search is not a city or could not be found.'
 			alert("Input for search is not a city or could not be found");
 			return ;
 		}
-		console.log("CityData: ", cityResult);
 		query = "I'm visiting " + cityResult?.name + ", " + cityResult?.country
 			+ ". Please tell me a brief recommendation of the better rated restaurants and acommodations in the city center and some things to visit. Thank you!";
-		console.log("Query: ", query);
 		try
 		{
 			const	response = await fetch(apiEndPoint, {
@@ -110,9 +110,7 @@ async function searchBar()
 					]
 				})
 			});
-			console.log("response from POST: ", response);
 			const data : ApiResponse = await response.json();
-			console.log("data from api response: ", data);
 			if (!response.ok)
 				alert("An error occurred while AI was generating text.");
 			else
@@ -128,6 +126,7 @@ async function searchBar()
 		}
 		catch (error)
 		{
+			alert("Error fetching AI generated text, check console log");
 			console.error("Error fetching AI generated text:", error);
 			if (textArea)
 				textArea.innerText = 'An error occurred while generating text.';
@@ -151,10 +150,8 @@ async function	checkQuery(query: string): Promise<CityData | null>
 			.join(' ');
 		for (const city of cityDictionary)
 		{
-			if (city.name === normalizedQuery){
-				console.log("Match found:", city);
+			if (city.name === normalizedQuery)
 				return (city);
-			}
 		}
 	}
 	catch (error) {

@@ -204,12 +204,13 @@ header #login-button:hover {
 	font-size: 4vw;
 }
 
-.trip-reccommendation{
+#trip-reccommendation{
 	margin-top: 0.25rem;
 	margin-bottom: 0.25rem;
 	margin-left: 1rem;
 	padding: 0.25rem;
 	font-size: 4vw;
+	display: none;
 }
 
 #top-block{
@@ -220,7 +221,7 @@ header #login-button:hover {
 }
 
 #bottom-block{
-	display: flex;
+	display: none;
 	flex-direction: column;
 	margin: 0.5rem;
 	padding: 1rem;
@@ -251,7 +252,7 @@ header #login-button:hover {
 	max-height: 600px;
 }
 
-.responsive-iframe {
+#responsive-iframe {
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -296,6 +297,7 @@ footer {
 	.card h3 {
 		font-size: 1.5rem;
 	}
+
 	.card p {
 		font-size: 1rem;
 	}

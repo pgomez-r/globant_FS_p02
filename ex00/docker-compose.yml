@@ -1,15 +1,17 @@
 services:
   web:
+    image: ${CONTAINER_NAME}
     build: .
-    container_name: app_gallery
+    container_name: trip_recommendator
     ports:
       - "5500:5500"
     volumes:
       - .:/usr/src/docker_app
     command: npm start
   dev:
+    image: ${CONTAINER_NAME}
     build: .
-    container_name: app_gallery_dev
+    container_name: trip_recommendator
     ports:
       - "5500:5500"
     volumes:

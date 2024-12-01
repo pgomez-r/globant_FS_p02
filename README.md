@@ -4,9 +4,7 @@
 
 TripRecommendator is the first draft of an under-construction project which aims to be an AI-based trip recommendator that shows you the best places to stay and to eat in a certain city, using Gemini AI language model and Google Maps and Places APIs. 
 
-<div style="text-align: center;">
-    <img src="https://github.com/user-attachments/assets/03cc090d-9c51-44a8-96ac-285a60d65d6f" alt="Project Screenshot" style="width: 100%; max-width: 1600px;">
-</div>
+![simplescreenrecorder-2024-12-01_20 53 02-ezgif com-video-to-gif-converter](https://github.com/user-attachments/assets/af1b5333-80cc-4b75-b83b-7b8e4b86f945)
 
 ## Technologies Used
 

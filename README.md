@@ -47,5 +47,7 @@ TripRecommendator is the first draft of an under-construction project which aims
 - More optimized API consumption.
 - Add geolocation in the browser so when first entering the web, the user is asked to share their location and using that, the first search and recommendation is automatically done.
 - Dark mode.
+- Text input improvement
 - Show more functionality for place results.
 - Better styling in general.
+- Accessibility focus
